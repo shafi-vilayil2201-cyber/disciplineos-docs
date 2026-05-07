@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DisciplineOS — System Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --ink2: #2a2a2a;
+    --ink3: #555;
+    --ink4: #888;
+    --bg: #f9f7f2;
+    --bg2: #f0ede3;
+    --bg3: #e8e3d6;
+    --accent: #e35a1e;
+    --accent2: #b83d08;
+    --teal: #0f6e56;
+    --teal-bg: #e1f5ee;
+    --blue: #185fa5;
+    --blue-bg: #e6f1fb;
+    --amber: #854f0b;
+    --amber-bg: #faeeda;
+    --red: #a32d2d;
+    --red-bg: #fcebeb;
+    --purple: #534ab7;
+    --purple-bg: #eeedfe;
+    --border: rgba(0,0,0,0.1);
+    --border2: rgba(0,0,0,0.06);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* --- SIDEBAR NAV --- */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--ink);
+    color: #fff;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 0 0 2rem;
+  }
+
+  #sidebar .logo {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 0.5rem;
+  }
+
+  #sidebar .logo .wordmark {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+
+  #sidebar .logo .wordmark span { color: var(--accent); }
+
+  #sidebar .logo .tagline {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-family: var(--font-mono);
+  }
+
+  #sidebar nav { padding: 0.5rem 0; }
+
+  #sidebar nav .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    padding: 1rem 1.5rem 0.25rem;
+    font-family: var(--font-mono);
+  }
+
+  #sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.45rem 1.5rem;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  #sidebar nav a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--accent);
+  }
+
+  #sidebar nav a.active {
+    color: #fff;
+    border-left-color: var(--accent);
+    background: rgba(227,90,30,0.12);
+  }
+
+  #sidebar nav a .num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    min-width: 18px;
+  }
+
+  /* --- MAIN CONTENT --- */
+  #main {
+    margin-left: 260px;
+    min-height: 100vh;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 4rem 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(227,90,30,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(227,90,30,0.2);
+    color: #f4875a;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(227,90,30,0.3);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero .sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta .item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-meta .item .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    font-family: var(--font-mono);
+  }
+
+  .hero-meta .item .val {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  /* --- CONTENT SECTIONS --- */
+  .content { padding: 0; }
+
+  .section {
+    padding: 3.5rem 4rem;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .section:nth-child(even) { background: var(--bg2); }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(227,90,30,0.1);
+    border: 1px solid rgba(227,90,30,0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 6px;
+  }
+
+  .section h2 {
+    font-family: var(--font-head);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .section h3 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 2rem 0 0.75rem;
+    color: var(--ink2);
+    letter-spacing: -0.2px;
+  }
+
+  .section p {
+    color: var(--ink2);
+    margin-bottom: 1rem;
+    max-width: 780px;
+  }
+
+  /* --- CARDS --- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .card .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 0.75rem;
+  }
+
+  .card .card-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .card .card-desc {
+    font-size: 13px;
+    color: var(--ink3);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* --- FLOW STEPS --- */
+  .flow-steps { margin: 1.5rem 0; }
+
+  .flow-step {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .flow-step::before {
+    content: '';
+    position: absolute;
+    left: 16px; top: 40px;
+    width: 1px;
+    height: calc(100% + 8px);
+    background: var(--border);
+  }
+
+  .flow-step:last-child::before { display: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+  }
+
+  .step-body { flex: 1; }
+
+  .step-body .step-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .step-body .step-desc {
+    font-size: 13px;
+    color: var(--ink3);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* --- TABLE --- */
+  .schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 1.5rem 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .schema-table th {
+    background: var(--ink);
+    color: rgba(255,255,255,0.7);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .schema-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border2);
+    vertical-align: top;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  .schema-table tr:last-child td { border-bottom: none; }
+
+  .schema-table tr:hover td { background: var(--bg2); }
+
+  .schema-table .field { font-family: var(--font-mono); color: var(--blue); font-size: 12px; }
+  .schema-table .type { font-family: var(--font-mono); font-size: 11px; color: var(--ink4); }
+  .schema-table .pk { background: var(--amber-bg); color: var(--amber); font-family: var(--font-mono); font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+  .schema-table .fk { background: var(--purple-bg); color: var(--purple); font-family: var(--font-mono); font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+  .schema-table .idx { background: var(--teal-bg); color: var(--teal); font-family: var(--font-mono); font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+
+  /* --- CODE BLOCK --- */
+  .code-block {
+    background: var(--ink);
+    color: #d4d0c8;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+
+  .code-block .kw { color: #f4875a; }
+  .code-block .str { color: #98c96c; }
+  .code-block .cmt { color: #636363; font-style: italic; }
+  .code-block .num { color: #fac775; }
+  .code-block .fn { color: #8bbee8; }
+
+  /* --- TAGS / BADGES --- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    margin: 2px;
+  }
+
+  .tag-teal { background: var(--teal-bg); color: var(--teal); }
+  .tag-blue { background: var(--blue-bg); color: var(--blue); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber); }
+  .tag-red { background: var(--red-bg); color: var(--red); }
+  .tag-purple { background: var(--purple-bg); color: var(--purple); }
+  .tag-accent { background: rgba(227,90,30,0.1); color: var(--accent2); }
+
+  /* --- CALLOUT --- */
+  .callout {
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-size: 14px;
+    line-height: 1.6;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .callout-info { background: var(--blue-bg); color: var(--blue); border-left: 3px solid #185fa5; }
+  .callout-warn { background: var(--amber-bg); color: var(--amber); border-left: 3px solid #854f0b; }
+  .callout-success { background: var(--teal-bg); color: var(--teal); border-left: 3px solid #0f6e56; }
+  .callout-danger { background: var(--red-bg); color: var(--red); border-left: 3px solid #a32d2d; }
+
+  /* --- STREAK VISUAL --- */
+  .streak-grid {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin: 1.25rem 0;
+  }
+
+  .streak-dot {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+  }
+
+  .streak-dot.done { background: var(--teal); border-color: var(--teal); }
+  .streak-dot.fail { background: var(--red-bg); border-color: #f09595; }
+  .streak-dot.at-risk { background: var(--amber-bg); border-color: #fac775; }
+
+  /* --- TIMELINE --- */
+  .timeline { margin: 1.5rem 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+  }
+
+  .tl-time {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    text-align: right;
+    padding-top: 3px;
+  }
+
+  .tl-body {
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .tl-body::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -5px; top: 7px;
+  }
+
+  .tl-body .tl-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .tl-body .tl-desc {
+    font-size: 13px;
+    color: var(--ink3);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* --- TWO COLUMN LAYOUT --- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .panel-title {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink4);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .panel ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .panel ul li {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 13px;
+    color: var(--ink2);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border2);
+    align-items: flex-start;
+    line-height: 1.45;
+  }
+
+  .panel ul li:last-child { border-bottom: none; }
+
+  .panel ul li::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* --- SCORE CARD --- */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .score-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+
+  .score-card .score-val {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .score-card .score-label {
+    font-size: 11px;
+    color: var(--ink4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+  }
+
+  /* --- FORMULA BOX --- */
+  .formula {
+    background: var(--ink2);
+    color: #d4d0c8;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    line-height: 2;
+  }
+
+  .formula .var { color: #f4875a; }
+  .formula .op { color: #fac775; }
+  .formula .comment { color: #636363; font-style: italic; }
+
+  /* --- HORIZONTAL RULE --- */
+  hr { border: none; border-top: 1px solid var(--border2); margin: 2rem 0; }
+
+  /* --- SCROLL MARGIN --- */
+  [id] { scroll-margin-top: 24px; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 1100px) {
+    #sidebar { width: 220px; }
+    #main { margin-left: 220px; }
+    .section { padding: 2.5rem 2.5rem; }
+    .hero { padding: 3rem 2.5rem 2rem; }
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .section { padding: 2rem 1.5rem; }
+    .hero { padding: 2rem 1.5rem 1.5rem; }
+  }
+
+  /* --- PRINT --- */
+  @media print {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+  }
+
+  /* --- ARCH DIAGRAM --- */
+  .arch-diagram {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+
+  .arch-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    margin-bottom: 0.5rem;
+  }
+
+  .arch-layer-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--ink4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .arch-boxes {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .arch-box {
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+  }
+
+  .ab-dark { background: var(--ink); color: rgba(255,255,255,0.85); }
+  .ab-accent { background: rgba(227,90,30,0.12); color: var(--accent2); border: 1px solid rgba(227,90,30,0.3); }
+  .ab-teal { background: var(--teal-bg); color: var(--teal); }
+  .ab-blue { background: var(--blue-bg); color: var(--blue); }
+  .ab-purple { background: var(--purple-bg); color: var(--purple); }
+  .ab-amber { background: var(--amber-bg); color: var(--amber); }
+
+  .arch-arrow {
+    display: flex;
+    justify-content: center;
+    color: var(--ink4);
+    font-size: 18px;
+    margin: 2px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="logo">
+    <div class="wordmark">Discipline<span>OS</span></div>
+    <div class="tagline">System Documentation v1.0</div>
+  </div>
+  <nav>
+    <div class="section-label">Overview</div>
+    <a href="#vision"><span class="num">01</span> Product Vision</a>
+    <a href="#journey"><span class="num">02</span> User Journey</a>
+
+    <div class="section-label">Architecture</div>
+    <a href="#workflow"><span class="num">03</span> Workflow Architecture</a>
+    <a href="#database"><span class="num">04</span> Database Schema</a>
+    <a href="#automation"><span class="num">05</span> Automation Flow</a>
+    <a href="#ai-pipeline"><span class="num">06</span> AI Processing Pipeline</a>
+
+    <div class="section-label">Core Logic</div>
+    <a href="#streak"><span class="num">07</span> Streak Engine</a>
+    <a href="#daily"><span class="num">08</span> Daily Accountability</a>
+    <a href="#weekly"><span class="num">09</span> Weekly Evaluation</a>
+    <a href="#gamification"><span class="num">10</span> Gamification</a>
+    <a href="#ai-coaching"><span class="num">11</span> AI Coaching Layer</a>
+
+    <div class="section-label">Production</div>
+    <a href="#edge-cases"><span class="num">12</span> Edge Cases</a>
+    <a href="#failure"><span class="num">13</span> Failure Recovery</a>
+    <a href="#scalability"><span class="num">14</span> Scalability Plan</a>
+    <a href="#security"><span class="num">15</span> Security</a>
+    <a href="#deployment"><span class="num">16</span> Deployment</a>
+    <a href="#saas"><span class="num">17</span> SaaS Expansion</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">⚡ Production Documentation</div>
+    <h1>Discipline<span>OS</span></h1>
+    <p class="sub">A personalized aspirant accountability platform engineered for UPSC, PSC, NEET, JEE, Coding & competitive exam students. Powered by AI, automation, and behavioral psychology.</p>
+    <div class="hero-meta">
+      <div class="item"><span class="label">Version</span><span class="val">1.0.0</span></div>
+      <div class="item"><span class="label">Stack</span><span class="val">n8n · Telegram · OpenAI</span></div>
+      <div class="item"><span class="label">Target</span><span class="val">UPSC / NEET / JEE / PSC</span></div>
+      <div class="item"><span class="label">Architecture</span><span class="val">Multi-tenant SaaS</span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01. PRODUCT VISION -->
+    <section class="section" id="vision">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2>Product Vision</h2>
+      </div>
+
+      <p>DisciplineOS is not a study app. It is an <strong>accountability operating system</strong> — built to enforce, monitor, and sustain the behavioral discipline that high-stakes competitive exam aspirants need to succeed over months and years of preparation.</p>
+
+      <p>Traditional study platforms assume students are self-motivated. DisciplineOS assumes the opposite: that most aspirants need external structure, real-time feedback, intelligent nudges, and psychological pressure to stay on track.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background: rgba(227,90,30,0.1);">🎯</div>
+          <div class="card-title">Hyper-Personalization</div>
+          <p class="card-desc">No two students share the same automation schedule. Every message, reminder, and evaluation is tuned to each student's own wake time, habits, and goals.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--teal-bg);">🤖</div>
+          <div class="card-title">AI Understanding</div>
+          <p class="card-desc">Natural language replies are parsed by OpenAI to extract topics studied, hours completed, emotional state, and productivity signals — no forms required.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--blue-bg);">🔥</div>
+          <div class="card-title">Streak Psychology</div>
+          <p class="card-desc">Loss aversion, streak rewards, and weekly promotions/demotions create behavioral pressure that makes skipping study sessions feel costly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--purple-bg);">📊</div>
+          <div class="card-title">Behavioral Analytics</div>
+          <p class="card-desc">Long-term consistency tracking, burnout detection, weak subject heatmaps, and focus score trends surface insights that students can't see themselves.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--amber-bg);">⚙️</div>
+          <div class="card-title">Full Automation</div>
+          <p class="card-desc">n8n workflows trigger Telegram messages, log data to Google Sheets/PostgreSQL, invoke OpenAI, compute scores, and update leaderboards — with zero manual intervention.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--red-bg);">📈</div>
+          <div class="card-title">Scalable SaaS</div>
+          <p class="card-desc">Built to grow from 10 students to 10,000. Multi-tenant architecture, per-user isolation, and a React dashboard allow admin and student access at scale.</p>
+        </div>
+      </div>
+
+      <h3>Core Design Principle</h3>
+      <div class="callout callout-info">
+        <span class="callout-icon">💡</span>
+        <span>Every student must receive a <strong>personalized study accountability system</strong> based on their own wake-up time, study schedule, target hours, working style, consistency level, daily goals, and weak areas. The system must <strong>never</strong> send the same message to all students at the same time.</span>
+      </div>
+    </section>
+
+    <!-- 02. USER JOURNEY -->
+    <section class="section" id="journey">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2>User Journey</h2>
+      </div>
+
+      <p>The complete lifecycle of a student from onboarding to long-term accountability.</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Day 0</div>
+          <div class="tl-body">
+            <div class="tl-title">Registration & Onboarding</div>
+            <p class="tl-desc">Student fills onboarding form (HTML or Google Form). Provides name, Telegram username, phone, exam type, daily target hours, wake time, sleep time, preferred study slots, weak subjects, weekly goals, consistency level, and timezone. Data is auto-saved to Google Sheets / PostgreSQL and a unique <code>user_id</code> is assigned.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Day 0</div>
+          <div class="tl-body">
+            <div class="tl-title">Personalized Schedule Generation</div>
+            <p class="tl-desc">The Personalized Automation Engine reads the student's profile and generates a unique daily schedule: morning accountability time (wake + 15 min), mid-day check-in times every 2 hours, evening review time, and night summary time. These schedules are stored per-student and drive all automation triggers.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Daily</div>
+          <div class="tl-body">
+            <div class="tl-title">Morning Accountability Check</div>
+            <p class="tl-desc">Student receives a personalized Good Morning message on Telegram. Bot asks: today's target, focus subject, planned study hours, and energy level (1–5). Student replies in natural language. AI extracts structured data and logs it as the day's DailyPlan entry.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Every 2h</div>
+          <div class="tl-body">
+            <div class="tl-title">Mid-Day Progress Pings</div>
+            <p class="tl-desc">Bot sends progress check-ins every 2 hours within the student's active window. Asks: completed topics, current focus level, break status, test performance. Student replies freely ("Completed Polity Chapter 3" / "Taking a 15-minute break"). AI logs structured FocusSession entries.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Evening</div>
+          <div class="tl-body">
+            <div class="tl-title">Night Review</div>
+            <p class="tl-desc">Bot initiates end-of-day review. Asks: total hours studied, what was completed, what was skipped, tomorrow's plan, and overall mood. AI computes DailyScore (0–100) and updates StreakHistory. If the student fails the minimum threshold, streak is broken and penalty applied.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Weekly</div>
+          <div class="tl-body">
+            <div class="tl-title">Weekly Evaluation & Promotion</div>
+            <p class="tl-desc">System evaluates the week: were target hours met on ≥4 days? Was 60%+ completion maintained? If yes → student advances to next week's schedule. If no → student repeats the same week. If 3+ failures → full streak reset. Leaderboard updated. AI generates a personalized weekly feedback report.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Ongoing</div>
+          <div class="tl-body">
+            <div class="tl-title">AI Coaching Interventions</div>
+            <p class="tl-desc">AI monitors patterns across sessions: detects low consistency (3-day drops), burnout signals (energy &lt; 2 for 2+ days), distraction patterns (short sessions, incomplete logs), and weak subject recurrence. Triggers motivational nudges, break recommendations, or adaptive plan suggestions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. WORKFLOW ARCHITECTURE -->
+    <section class="section" id="workflow">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2>Workflow Architecture</h2>
+      </div>
+
+      <p>DisciplineOS is composed of five interconnected system layers. Each layer has a distinct responsibility and communicates via event-driven triggers.</p>
+
+      <div class="arch-diagram">
+        <div class="arch-row">
+          <div class="arch-layer-label">User Layer</div>
+          <div class="arch-boxes">
+            <div class="arch-box ab-dark">Telegram Bot</div>
+            <div class="arch-box ab-dark">Onboarding Form</div>
+            <div class="arch-box ab-dark">React Dashboard (future)</div>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row">
+          <div class="arch-layer-label">Automation</div>
+          <div class="arch-boxes">
+            <div class="arch-box ab-accent">n8n Workflows</div>
+            <div class="arch-box ab-accent">Cron Scheduler</div>
+            <div class="arch-box ab-accent">Personalized Trigger Engine</div>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row">
+          <div class="arch-layer-label">AI Layer</div>
+          <div class="arch-boxes">
+            <div class="arch-box ab-teal">OpenAI GPT-4 Parser</div>
+            <div class="arch-box ab-teal">Intent Classifier</div>
+            <div class="arch-box ab-teal">Coaching Engine</div>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row">
+          <div class="arch-layer-label">Processing</div>
+          <div class="arch-boxes">
+            <div class="arch-box ab-blue">Score Calculator</div>
+            <div class="arch-box ab-blue">Streak Engine</div>
+            <div class="arch-box ab-blue">Weekly Evaluator</div>
+            <div class="arch-box ab-blue">Leaderboard Updater</div>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-row">
+          <div class="arch-layer-label">Data Layer</div>
+          <div class="arch-boxes">
+            <div class="arch-box ab-purple">PostgreSQL (primary)</div>
+            <div class="arch-box ab-purple">Google Sheets (MVP)</div>
+            <div class="arch-box ab-amber">Redis (cache/queue)</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Event Flow Overview</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Student Sends Message → Telegram Webhook</div>
+            <p class="step-desc">Every student message triggers a Telegram webhook that n8n is subscribed to. n8n receives the payload with chat_id, user_id, and raw message text.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">User Lookup + Context Fetch</div>
+            <p class="step-desc">n8n queries the Users table via chat_id to retrieve the student's profile, current streak, today's plan, and last activity timestamp.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">AI Parsing (OpenAI)</div>
+            <p class="step-desc">The raw message + student context is sent to OpenAI GPT-4. The AI extracts: study_topic, duration_minutes, productivity_score (1–10), emotional_signal, break_type, test_score. Returns structured JSON.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Data Storage</div>
+            <p class="step-desc">Parsed data is written to IncomingMessages, StudyLogs, and FocusSessions tables. Running daily totals are updated in DailySchedules.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Score Computation</div>
+            <p class="step-desc">Score Calculator evaluates updated daily logs and computes the DailyScore. If study hours ≥ threshold or significant progress logged, streak eligibility flag is updated.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <div class="step-title">Response Generation</div>
+            <p class="step-desc">n8n triggers a follow-up Telegram message to acknowledge the update, provide encouragement or correction, and optionally ask the next check-in question.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. DATABASE SCHEMA -->
+    <section class="section" id="database">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <h2>Database Schema</h2>
+      </div>
+
+      <p>Complete relational schema for DisciplineOS. All tables follow a PostgreSQL-first design with Google Sheets as the MVP fallback.</p>
+
+      <h3>Users Table</h3>
+      <table class="schema-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field">user_id</td><td class="type">UUID</td><td><span class="pk">PK</span></td><td>Unique identifier, auto-generated on registration</td></tr>
+          <tr><td class="field">full_name</td><td class="type">VARCHAR(255)</td><td></td><td>Student's full name</td></tr>
+          <tr><td class="field">telegram_username</td><td class="type">VARCHAR(100)</td><td><span class="idx">IDX</span></td><td>Telegram @username for bot delivery</td></tr>
+          <tr><td class="field">telegram_chat_id</td><td class="type">BIGINT</td><td><span class="idx">IDX</span></td><td>Telegram chat ID for sending messages programmatically</td></tr>
+          <tr><td class="field">phone</td><td class="type">VARCHAR(20)</td><td></td><td>Phone number (optional)</td></tr>
+          <tr><td class="field">exam_type</td><td class="type">ENUM</td><td></td><td>UPSC / NEET / JEE / PSC / CODING / OTHER</td></tr>
+          <tr><td class="field">daily_target_hours</td><td class="type">DECIMAL(4,2)</td><td></td><td>Student's self-declared daily study goal</td></tr>
+          <tr><td class="field">wake_time</td><td class="type">TIME</td><td></td><td>Used to calculate morning accountability trigger</td></tr>
+          <tr><td class="field">sleep_time</td><td class="type">TIME</td><td></td><td>Defines end of active automation window</td></tr>
+          <tr><td class="field">timezone</td><td class="type">VARCHAR(50)</td><td></td><td>IANA timezone string e.g. Asia/Kolkata</td></tr>
+          <tr><td class="field">weak_subjects</td><td class="type">TEXT[]</td><td></td><td>Array of subject names</td></tr>
+          <tr><td class="field">consistency_level</td><td class="type">SMALLINT</td><td></td><td>Self-reported 1–5 at registration</td></tr>
+          <tr><td class="field">current_streak</td><td class="type">INTEGER</td><td></td><td>Live streak count (days)</td></tr>
+          <tr><td class="field">longest_streak</td><td class="type">INTEGER</td><td></td><td>Historical best streak</td></tr>
+          <tr><td class="field">status</td><td class="type">ENUM</td><td></td><td>ACTIVE / INACTIVE / AT_RISK / BANNED</td></tr>
+          <tr><td class="field">created_at</td><td class="type">TIMESTAMPTZ</td><td></td><td>Registration timestamp</td></tr>
+        </tbody>
+      </table>
+
+      <h3>DailySchedules Table</h3>
+      <table class="schema-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field">schedule_id</td><td class="type">UUID</td><td><span class="pk">PK</span></td><td>Auto-generated</td></tr>
+          <tr><td class="field">user_id</td><td class="type">UUID</td><td><span class="fk">FK → Users</span></td><td>Foreign key to student</td></tr>
+          <tr><td class="field">date</td><td class="type">DATE</td><td><span class="idx">IDX</span></td><td>Specific date of this schedule</td></tr>
+          <tr><td class="field">planned_hours</td><td class="type">DECIMAL(4,2)</td><td></td><td>Target hours declared in morning check-in</td></tr>
+          <tr><td class="field">actual_hours</td><td class="type">DECIMAL(4,2)</td><td></td><td>Running total computed from StudyLogs</td></tr>
+          <tr><td class="field">focus_subject</td><td class="type">VARCHAR(100)</td><td></td><td>Primary subject for the day</td></tr>
+          <tr><td class="field">tasks_planned</td><td class="type">INTEGER</td><td></td><td>Number of tasks declared</td></tr>
+          <tr><td class="field">tasks_completed</td><td class="type">INTEGER</td><td></td><td>Completed tasks count (updated live)</td></tr>
+          <tr><td class="field">completion_pct</td><td class="type">DECIMAL(5,2)</td><td></td><td>tasks_completed / tasks_planned × 100</td></tr>
+          <tr><td class="field">streak_qualified</td><td class="type">BOOLEAN</td><td></td><td>True if daily minimums are met</td></tr>
+          <tr><td class="field">daily_score</td><td class="type">SMALLINT</td><td></td><td>Computed 0–100 score</td></tr>
+          <tr><td class="field">energy_level</td><td class="type">SMALLINT</td><td></td><td>Morning-declared 1–5</td></tr>
+        </tbody>
+      </table>
+
+      <h3>StudyLogs Table</h3>
+      <table class="schema-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field">log_id</td><td class="type">UUID</td><td><span class="pk">PK</span></td><td></td></tr>
+          <tr><td class="field">user_id</td><td class="type">UUID</td><td><span class="fk">FK → Users</span></td><td></td></tr>
+          <tr><td class="field">schedule_id</td><td class="type">UUID</td><td><span class="fk">FK → DailySchedules</span></td><td>Links to the day's schedule</td></tr>
+          <tr><td class="field">subject</td><td class="type">VARCHAR(100)</td><td></td><td>AI-extracted subject name</td></tr>
+          <tr><td class="field">topic</td><td class="type">TEXT</td><td></td><td>Specific topic studied</td></tr>
+          <tr><td class="field">duration_minutes</td><td class="type">INTEGER</td><td></td><td>Duration in minutes (AI-extracted)</td></tr>
+          <tr><td class="field">productivity_score</td><td class="type">SMALLINT</td><td></td><td>AI-assessed 1–10</td></tr>
+          <tr><td class="field">raw_message</td><td class="type">TEXT</td><td></td><td>Original student message</td></tr>
+          <tr><td class="field">logged_at</td><td class="type">TIMESTAMPTZ</td><td></td><td>When the log was recorded</td></tr>
+        </tbody>
+      </table>
+
+      <h3>StreakHistory Table</h3>
+      <table class="schema-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field">streak_id</td><td class="type">UUID</td><td><span class="pk">PK</span></td><td></td></tr>
+          <tr><td class="field">user_id</td><td class="type">UUID</td><td><span class="fk">FK → Users</span></td><td></td></tr>
+          <tr><td class="field">streak_start</td><td class="type">DATE</td><td></td><td>First day of streak</td></tr>
+          <tr><td class="field">streak_end</td><td class="type">DATE</td><td></td><td>Last day (null if ongoing)</td></tr>
+          <tr><td class="field">streak_length</td><td class="type">INTEGER</td><td></td><td>Number of qualifying days</td></tr>
+          <tr><td class="field">end_reason</td><td class="type">ENUM</td><td></td><td>DAILY_MISS / WEEKLY_PENALTY / MANUAL_RESET</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Additional Tables</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">FocusSessions</div>
+          <ul>
+            <li>session_id (PK), user_id (FK), schedule_id (FK)</li>
+            <li>start_time, end_time, duration_minutes</li>
+            <li>session_type: DEEP_WORK / BREAK / TEST / REVISION</li>
+            <li>focus_score (AI computed 1–10)</li>
+            <li>notes (AI-extracted summary)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">WeeklyPerformance</div>
+          <ul>
+            <li>week_id (PK), user_id (FK), week_start_date</li>
+            <li>total_hours, avg_daily_hours</li>
+            <li>days_met_minimum, completion_avg_pct</li>
+            <li>week_score (0–100), promoted (BOOLEAN)</li>
+            <li>ai_feedback (TEXT), leaderboard_rank</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">NightReviews</div>
+          <ul>
+            <li>review_id (PK), user_id (FK), date</li>
+            <li>total_hours_actual, mood_score (1–5)</li>
+            <li>skipped_topics (TEXT[]), tomorrow_plan</li>
+            <li>ai_summary, ai_coaching_note</li>
+            <li>review_submitted_at (TIMESTAMPTZ)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Leaderboard</div>
+          <ul>
+            <li>leaderboard_id (PK), user_id (FK)</li>
+            <li>week_rank, all_time_rank</li>
+            <li>discipline_score, focus_score, recovery_score</li>
+            <li>streak_badge, consistency_tier</li>
+            <li>updated_at (TIMESTAMPTZ)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. AUTOMATION FLOW -->
+    <section class="section" id="automation">
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <h2>Automation Flow Design</h2>
+      </div>
+
+      <p>The automation engine is built on n8n. Each student has an independently scheduled set of workflows that fire based on their personal profile. No two students share the same cron schedule.</p>
+
+      <h3>Personalized Trigger Calculation</h3>
+      <div class="code-block">
+<span class="cmt">// Pseudo-code: Calculate personalized trigger times</span>
+<span class="kw">function</span> <span class="fn">generateStudentSchedule</span>(user) {
+  <span class="kw">const</span> wake = parseTime(user.wake_time); <span class="cmt">// e.g. "06:00"</span>
+
+  <span class="kw">return</span> {
+    morningPing: addMinutes(wake, <span class="num">15</span>),
+    checkIn1:    addMinutes(wake, <span class="num">120</span>),  <span class="cmt">// +2h</span>
+    checkIn2:    addMinutes(wake, <span class="num">240</span>),  <span class="cmt">// +4h</span>
+    checkIn3:    addMinutes(wake, <span class="num">360</span>),  <span class="cmt">// +6h</span>
+    eveningNudge: subtractMinutes(user.sleep_time, <span class="num">120</span>),
+    nightReview:  subtractMinutes(user.sleep_time, <span class="num">30</span>),
+  };
+}
+
+<span class="cmt">// Example outputs:</span>
+<span class="cmt">// Student A (wake 06:00): 06:15, 08:00, 10:00, 12:00, 20:00, 21:30</span>
+<span class="cmt">// Student B (wake 08:00): 08:15, 10:00, 12:00, 14:00, 20:00, 21:30</span>
+      </div>
+
+      <h3>n8n Workflow Architecture</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">W1</div>
+          <div class="step-body">
+            <div class="step-title">Registration Intake Workflow</div>
+            <p class="step-desc">Triggered by: Google Form submission or HTTP POST from onboarding form. Actions: Parse form data → Create Users record → Generate DailySchedule template → Register personalized cron jobs in n8n → Send Welcome Telegram message with orientation instructions.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W2</div>
+          <div class="step-body">
+            <div class="step-title">Morning Accountability Workflow</div>
+            <p class="step-desc">Triggered by: Per-student cron (wake_time + 15 min). Actions: Fetch student profile → Generate personalized Good Morning message → Send via Telegram Bot API → Create empty DailySchedule record for today → Set session state = MORNING_PENDING.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W3</div>
+          <div class="step-body">
+            <div class="step-title">Inbound Message Processor</div>
+            <p class="step-desc">Triggered by: Telegram webhook on any message. Actions: Identify user by chat_id → Fetch current session_state → Route to appropriate sub-workflow (morning_response / check_in_response / night_review_response) → Call OpenAI parser → Store structured log → Compute running score → Send acknowledgment.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W4</div>
+          <div class="step-body">
+            <div class="step-title">Mid-Day Check-In Workflows (×3)</div>
+            <p class="step-desc">Triggered by: Three per-student crons (wake + 2h, 4h, 6h). Actions: Fetch today's DailySchedule → Check if student has already responded to last ping → If yes: send next question. If no: send gentle reminder + "Still studying?" message → Update PromptLogs.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W5</div>
+          <div class="step-body">
+            <div class="step-title">Night Review Workflow</div>
+            <p class="step-desc">Triggered by: Per-student cron (sleep_time - 30 min). Actions: Compile day summary from StudyLogs → Send review message asking final totals + mood + tomorrow plan → Set session_state = NIGHT_REVIEW → After response: compute DailyScore → Update StreakHistory → Check streak eligibility.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W6</div>
+          <div class="step-body">
+            <div class="step-title">Weekly Evaluation Workflow</div>
+            <p class="step-desc">Triggered by: Weekly cron every Sunday at 11:59 PM (per student timezone). Actions: Aggregate 7 days of DailySchedules → Compute WeeklyPerformance → Run streak penalty logic → Determine promotion/retention → Update Leaderboard → Send AI-generated weekly report via Telegram.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">W7</div>
+          <div class="step-body">
+            <div class="step-title">Inactivity Watch Workflow</div>
+            <p class="step-desc">Triggered by: Global cron every 4 hours. Actions: Query all ACTIVE users → Check last_activity_at → If &gt; 26 hours and no morning response: send re-engagement message → If &gt; 48 hours: mark status = AT_RISK → If &gt; 72 hours: notify admin and pause automation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. AI PIPELINE -->
+    <section class="section" id="ai-pipeline">
+      <div class="section-header">
+        <span class="section-number">06</span>
+        <h2>AI Processing Pipeline</h2>
+      </div>
+
+      <p>OpenAI GPT-4 acts as the understanding layer between raw student messages and structured database records.</p>
+
+      <h3>AI Parser — System Prompt Architecture</h3>
+      <div class="code-block">
+<span class="cmt">// OpenAI API call structure from n8n</span>
+{
+  <span class="str">"model"</span>: <span class="str">"gpt-4o"</span>,
+  <span class="str">"system"</span>: <span class="str">"You are a study log parser for a competitive exam student.
+    Extract structured data from the student's message.
+    Return ONLY valid JSON. Fields:
+    - subject: string or null
+    - topic: string or null
+    - duration_minutes: integer or null
+    - activity_type: STUDY | BREAK | TEST | REVISION | PLANNING
+    - productivity_score: 1-10
+    - emotional_signal: MOTIVATED | NEUTRAL | TIRED | STRESSED | BURNED_OUT
+    - is_complete: boolean (did they finish what they started?)
+    Student profile: {exam_type}, weak subjects: {weak_subjects}"</span>,
+  <span class="str">"user"</span>: <span class="str">"Completed Polity Chapter 3 in 90 minutes. Feeling good!"</span>
+}
+
+<span class="cmt">// Expected output:</span>
+{
+  <span class="str">"subject"</span>: <span class="str">"Polity"</span>,
+  <span class="str">"topic"</span>: <span class="str">"Chapter 3"</span>,
+  <span class="str">"duration_minutes"</span>: <span class="num">90</span>,
+  <span class="str">"activity_type"</span>: <span class="str">"STUDY"</span>,
+  <span class="str">"productivity_score"</span>: <span class="num">8</span>,
+  <span class="str">"emotional_signal"</span>: <span class="str">"MOTIVATED"</span>,
+  <span class="str">"is_complete"</span>: <span class="kw">true</span>
+}
+      </div>
+
+      <h3>AI Coaching Prompt Architecture</h3>
+      <div class="code-block">
+<span class="cmt">// Triggered when AI coaching analysis is needed</span>
+{
+  <span class="str">"system"</span>: <span class="str">"You are a study coach for {exam_type} aspirant {name}.
+    Based on their last 7 days of study logs provided, detect:
+    1. Consistency trend (improving/declining/flat)
+    2. Subject imbalance (neglected vs over-studied)
+    3. Burnout risk (scale 1-5)
+    4. Distraction pattern (if any)
+    Generate: one motivational nudge (2 sentences max),
+    one actionable recommendation, and flag any urgent concern.
+    Tone: direct, warm, like a strict but caring mentor."</span>,
+  <span class="str">"user"</span>: <span class="str">"7-day logs: {json_logs}"</span>
+}
+      </div>
+
+      <h3>AI Processing Events</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">📥 Message Parsing</div>
+          <p class="card-desc">Every inbound Telegram message is parsed to extract structured study data. Fires on every student reply.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Daily Score Reasoning</div>
+          <p class="card-desc">AI contextualizes the daily score: explains why the student scored X and what they should adjust tomorrow.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🔍 Weekly Pattern Analysis</div>
+          <p class="card-desc">Fires weekly. Detects multi-day trends: consistent weak spots, session length patterns, subject neglect.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🚨 Burnout Intervention</div>
+          <p class="card-desc">Fires when energy score ≤ 2 for 2+ consecutive days. Generates a special recovery message with revised lighter targets.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. STREAK ENGINE -->
+    <section class="section" id="streak">
+      <div class="section-header">
+        <span class="section-number">07</span>
+        <h2>Streak Engine Logic</h2>
+      </div>
+
+      <p>The streak system is the psychological core of DisciplineOS. It creates loss aversion, rewards consistency, and enforces minimum standards through a strict rule engine.</p>
+
+      <h3>Daily Streak Qualification Rules</h3>
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚡</span>
+        <span>A student <strong>qualifies</strong> for the daily streak only if <strong>BOTH</strong> conditions are met: (1) actual study hours ≥ 5.0 hours, AND (2) task completion percentage ≥ 60%. If either condition fails, the day is marked as a streak miss.</span>
+      </div>
+
+      <h3>Streak Calculation Algorithm</h3>
+      <div class="code-block">
+<span class="kw">function</span> <span class="fn">evaluateDailyStreak</span>(userId, date) {
+  <span class="kw">const</span> day = <span class="fn">getDailySchedule</span>(userId, date);
+
+  <span class="kw">const</span> hoursQualified = day.actual_hours >= <span class="num">5.0</span>;
+  <span class="kw">const</span> completionQualified = day.completion_pct >= <span class="num">60</span>;
+  <span class="kw">const</span> qualified = hoursQualified && completionQualified;
+
+  <span class="fn">updateDailySchedule</span>(date, { streak_qualified: qualified });
+
+  <span class="kw">if</span> (qualified) {
+    <span class="fn">incrementStreak</span>(userId);
+    <span class="fn">logStreakEvent</span>(userId, <span class="str">'QUALIFIED'</span>);
+  } <span class="kw">else</span> {
+    <span class="fn">breakStreak</span>(userId, date);  <span class="cmt">// saves current streak to StreakHistory</span>
+    <span class="fn">resetCurrentStreak</span>(userId);
+    <span class="fn">sendStreakLostMessage</span>(userId, { hoursQualified, completionQualified });
+  }
+}
+
+<span class="kw">function</span> <span class="fn">evaluateWeeklyPenalty</span>(userId, weekStart) {
+  <span class="kw">const</span> days = <span class="fn">getWeekDays</span>(userId, weekStart);
+  <span class="kw">const</span> failedDays = days.<span class="fn">filter</span>(d => !d.streak_qualified).length;
+
+  <span class="kw">if</span> (failedDays >= <span class="num">3</span>) {
+    <span class="fn">hardResetStreak</span>(userId);  <span class="cmt">// ALL accumulated streaks lost</span>
+    <span class="fn">sendWeeklyResetPenaltyMessage</span>(userId, failedDays);
+  }
+}
+      </div>
+
+      <h3>Streak Status States</h3>
+      <div class="score-grid">
+        <div class="score-card" style="border-top: 3px solid var(--teal);">
+          <div class="score-val" style="color: var(--teal);">🔥</div>
+          <div class="score-label">Active Streak</div>
+        </div>
+        <div class="score-card" style="border-top: 3px solid var(--amber);">
+          <div class="score-val" style="color: var(--amber);">⚠️</div>
+          <div class="score-label">At Risk</div>
+        </div>
+        <div class="score-card" style="border-top: 3px solid var(--red);">
+          <div class="score-val" style="color: var(--red);">💔</div>
+          <div class="score-label">Streak Lost</div>
+        </div>
+        <div class="score-card" style="border-top: 3px solid var(--purple);">
+          <div class="score-val" style="color: var(--purple);">🔄</div>
+          <div class="score-label">Recovery</div>
+        </div>
+      </div>
+
+      <h3>Streak Visualization (30-day sample)</h3>
+      <div class="streak-grid">
+        <div class="streak-dot done" title="Day qualified"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot fail" title="Streak miss"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot at-risk" title="At risk"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot fail"></div>
+        <div class="streak-dot fail"></div>
+        <div class="streak-dot fail"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+        <div class="streak-dot done"></div>
+      </div>
+      <p style="font-size:12px; color: var(--ink4);">
+        <span class="tag tag-teal">■ Qualified</span>
+        <span class="tag tag-red">■ Miss</span>
+        <span class="tag tag-amber">■ At Risk</span>
+      </p>
+
+      <h3>Recovery System</h3>
+      <div class="callout callout-success">
+        <span class="callout-icon">🔄</span>
+        <span>A student in recovery mode (status = AT_RISK) receives a lighter target for 2 days: only 3 hours required + 40% completion. If they qualify both days, they re-enter normal mode. This prevents complete abandonment after a bad week.</span>
+      </div>
+
+      <h3>Weekly Progression Logic</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">Promoted → Next Week</div>
+          <ul>
+            <li>Met daily minimum on ≥ 4 of 7 days</li>
+            <li>Average completion ≥ 60% for the week</li>
+            <li>No weekly penalty triggered</li>
+            <li>Receives "Level Up" badge and next week tasks</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Retained → Repeat Week</div>
+          <ul>
+            <li>Failed daily minimum on ≥ 4 days</li>
+            <li>Average completion &lt; 60%</li>
+            <li>Repeats same week's syllabus/tasks</li>
+            <li>AI generates revised lighter schedule</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08. DAILY ACCOUNTABILITY -->
+    <section class="section" id="daily">
+      <div class="section-header">
+        <span class="section-number">08</span>
+        <h2>Daily Accountability Logic</h2>
+      </div>
+
+      <p>The daily cycle is a structured sequence of Telegram interactions designed to keep students accountable from morning to night.</p>
+
+      <h3>Daily Score Formula</h3>
+      <div class="formula">
+<span class="var">daily_score</span> = (
+  (<span class="var">actual_hours</span> / <span class="var">planned_hours</span>) × <span class="num">40</span>        <span class="comment">// 40% weight: hours</span>
+  + (<span class="var">completion_pct</span> / <span class="num">100</span>) × <span class="num">30</span>              <span class="comment">// 30% weight: tasks</span>
+  + (<span class="var">avg_productivity_score</span> / <span class="num">10</span>) × <span class="num">20</span>       <span class="comment">// 20% weight: focus quality</span>
+  + (<span class="var">night_review_submitted</span> ? <span class="num">10</span> : <span class="num">0</span>)         <span class="comment">// 10% weight: accountability</span>
+) <span class="op">clamped to [0, 100]</span>
+      </div>
+
+      <h3>Daily Prompt Sequence</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Morning</div>
+          <div class="tl-body">
+            <div class="tl-title">Good Morning Check-in</div>
+            <p class="tl-desc">"Good morning [Name]! 🌅 Day [N] of your UPSC journey. What's your target for today? (Hours + focus subject + energy level 1-5)"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">+2h</div>
+          <div class="tl-body">
+            <div class="tl-title">First Check-in</div>
+            <p class="tl-desc">"[Name], first check-in! What have you covered so far? Any topics completed?"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">+4h</div>
+          <div class="tl-body">
+            <div class="tl-title">Mid-Day Check-in</div>
+            <p class="tl-desc">"Midday check! How's the focus? Any breaks taken? What's your current study count?"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">+6h</div>
+          <div class="tl-body">
+            <div class="tl-title">Afternoon Check-in</div>
+            <p class="tl-desc">"Afternoon update — are you on track for today's goal? Feeling any burnout?"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Evening</div>
+          <div class="tl-body">
+            <div class="tl-title">Evening Wind-Down Nudge</div>
+            <p class="tl-desc">"2 hours left in your window. Final push — what's remaining on today's list?"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Night</div>
+          <div class="tl-body">
+            <div class="tl-title">Night Review</div>
+            <p class="tl-desc">"Day complete! Final report: total hours? What did you nail? What did you skip? Mood? Tomorrow's plan? Your streak is [N] days 🔥"</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Missed Check-in Escalation</h3>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">First Reminder (15 min after prompt)</div>
+            <p class="step-desc">Gentle re-send: "Hey! Just checking — did you see my earlier message?"</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Second Reminder (45 min after prompt)</div>
+            <p class="step-desc">Motivational pressure: "Your streak is at risk if you don't check in today. 5 minutes is all it takes."</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Final Warning (90 min after prompt)</div>
+            <p class="step-desc">Loss framing: "No response yet. If your night review isn't submitted, today won't count toward your streak."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09. WEEKLY EVALUATION -->
+    <section class="section" id="weekly">
+      <div class="section-header">
+        <span class="section-number">09</span>
+        <h2>Weekly Evaluation Logic</h2>
+      </div>
+
+      <p>Every Sunday night, the Weekly Evaluator runs per-student. It determines promotion, calculates week score, updates leaderboard, and generates AI feedback.</p>
+
+      <h3>Week Score Formula</h3>
+      <div class="formula">
+<span class="var">week_score</span> = (
+  <span class="var">avg_daily_score</span> × <span class="num">0.5</span>               <span class="comment">// 50%: average of 7 daily scores</span>
+  + (<span class="var">days_met_minimum</span> / <span class="num">7</span>) × <span class="num">100</span> × <span class="num">0.3</span>  <span class="comment">// 30%: consistency</span>
+  + (<span class="var">streak_maintained</span> ? <span class="num">20</span> : <span class="num">0</span>)      <span class="comment">// 20%: streak bonus</span>
+)
+      </div>
+
+      <h3>Weekly Decision Matrix</h3>
+      <table class="schema-table">
+        <thead><tr><th>Days Met Minimum</th><th>Avg Completion</th><th>Streak Status</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>5–7 days</td><td>≥ 70%</td><td>Active</td><td><span class="tag tag-teal">PROMOTED + Bonus Badge</span></td></tr>
+          <tr><td>4 days</td><td>≥ 60%</td><td>Active</td><td><span class="tag tag-blue">PROMOTED</span></td></tr>
+          <tr><td>4 days</td><td>&lt; 60%</td><td>Any</td><td><span class="tag tag-amber">RETAINED — Repeat Week</span></td></tr>
+          <tr><td>3 days</td><td>Any</td><td>Any</td><td><span class="tag tag-amber">RETAINED + AT_RISK Flag</span></td></tr>
+          <tr><td>0–2 days</td><td>Any</td><td>Any</td><td><span class="tag tag-red">RETAINED + Full Streak Reset</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Weekly AI Report Contents</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">Performance Summary</div>
+          <ul>
+            <li>Total hours studied vs target</li>
+            <li>Best and worst performing subjects</li>
+            <li>Consistency score breakdown</li>
+            <li>Productivity trend (↑ ↓ →)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">AI Coaching Insights</div>
+          <ul>
+            <li>Subject neglect detection</li>
+            <li>Burnout risk assessment</li>
+            <li>Next week recommended adjustments</li>
+            <li>Motivational message with streak context</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. GAMIFICATION -->
+    <section class="section" id="gamification">
+      <div class="section-header">
+        <span class="section-number">10</span>
+        <h2>Leaderboard & Gamification</h2>
+      </div>
+
+      <p>The gamification layer transforms daily discipline into a competitive, rewarding experience with ranks, badges, and meaningful scores.</p>
+
+      <h3>Score Components</h3>
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="score-val" style="color: var(--accent);">DS</div>
+          <div class="score-label">Discipline Score</div>
+        </div>
+        <div class="score-card">
+          <div class="score-val" style="color: var(--blue);">FS</div>
+          <div class="score-label">Focus Score</div>
+        </div>
+        <div class="score-card">
+          <div class="score-val" style="color: var(--teal);">CS</div>
+          <div class="score-label">Consistency Score</div>
+        </div>
+        <div class="score-card">
+          <div class="score-val" style="color: var(--purple);">RS</div>
+          <div class="score-label">Recovery Score</div>
+        </div>
+      </div>
+
+      <div class="formula">
+<span class="var">discipline_score</span> = (<span class="var">week_score</span> × <span class="num">0.4</span>) + (<span class="var">streak_days</span> × <span class="num">0.3</span>) + (<span class="var">focus_score_avg</span> × <span class="num">0.3</span>)
+<span class="var">focus_score</span>      = <span class="fn">avg</span>(<span class="var">productivity_score</span>) across all FocusSessions this week
+<span class="var">recovery_score</span>   = <span class="num">100</span> - (<span class="var">streak_breaks_per_month</span> × <span class="num">15</span>) <span class="comment">// penalizes frequent resets</span>
+      </div>
+
+      <h3>Streak Badges</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background: var(--amber-bg); font-size: 20px;">🌱</div>
+          <div class="card-title">Seedling</div>
+          <p class="card-desc">7-day streak. First milestone. "You've planted the seed of habit."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--blue-bg); font-size: 20px;">🔥</div>
+          <div class="card-title">Ignition</div>
+          <p class="card-desc">21-day streak. Habit formation zone. "21 days of pure discipline."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--teal-bg); font-size: 20px;">⚡</div>
+          <div class="card-title">Momentum</div>
+          <p class="card-desc">45-day streak. Unstoppable. "Nothing can stop your momentum now."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--purple-bg); font-size: 20px;">💎</div>
+          <div class="card-title">Diamond</div>
+          <p class="card-desc">90-day streak. Elite level. "3 months of unwavering consistency."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: rgba(227,90,30,0.1); font-size: 20px;">🏆</div>
+          <div class="card-title">Warrior</div>
+          <p class="card-desc">180-day streak. Rare. "Half a year. The true definition of discipline."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--ink); font-size: 20px; color: gold;">👑</div>
+          <div class="card-title">Legend</div>
+          <p class="card-desc">365-day streak. One of a kind. "A year of daily discipline. You are unstoppable."</p>
+        </div>
+      </div>
+
+      <h3>Burnout Detection Logic</h3>
+      <div class="code-block">
+<span class="kw">function</span> <span class="fn">detectBurnout</span>(userId) {
+  <span class="kw">const</span> logs = <span class="fn">getLast3DaysLogs</span>(userId);
+
+  <span class="kw">const</span> lowEnergy = logs.<span class="fn">filter</span>(d => d.energy_level &lt;= <span class="num">2</span>).length >= <span class="num">2</span>;
+  <span class="kw">const</span> decliningHours = logs[<span class="num">0</span>].actual_hours > logs[<span class="num">1</span>].actual_hours
+                       && logs[<span class="num">1</span>].actual_hours > logs[<span class="num">2</span>].actual_hours;
+  <span class="kw">const</span> emotionalSignals = logs.<span class="fn">filter</span>(d =>
+    d.emotional_signal === <span class="str">'BURNED_OUT'</span> || d.emotional_signal === <span class="str">'STRESSED'</span>
+  ).length >= <span class="num">2</span>;
+
+  <span class="kw">if</span> (lowEnergy && (decliningHours || emotionalSignals)) {
+    <span class="fn">triggerBurnoutIntervention</span>(userId);  <span class="cmt">// send recovery message</span>
+    <span class="fn">setLighterTargets</span>(userId, days = <span class="num">2</span>);    <span class="cmt">// reduce requirements</span>
+  }
+}
+      </div>
+    </section>
+
+    <!-- 11. AI COACHING -->
+    <section class="section" id="ai-coaching">
+      <div class="section-header">
+        <span class="section-number">11</span>
+        <h2>AI Coaching Layer</h2>
+      </div>
+
+      <p>The AI coaching layer operates as a passive monitor that surfaces actionable insights when patterns emerge across days and weeks.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background: var(--red-bg);">📉</div>
+          <div class="card-title">Low Consistency Detection</div>
+          <p class="card-desc">Triggered after 3 consecutive below-minimum days. AI sends a pattern-awareness message: "You've missed your goal 3 days in a row. Here's a recovery plan."</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--amber-bg);">😮‍💨</div>
+          <div class="card-title">Burnout Detection</div>
+          <p class="card-desc">Monitors energy level + emotional signal across messages. When exhaustion patterns appear, AI reduces targets and recommends rest proactively.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--blue-bg);">🎯</div>
+          <div class="card-title">Distraction Pattern Detection</div>
+          <p class="card-desc">Short sessions (&lt;30 min), many break logs, low productivity scores for 2+ days → AI flags distraction and suggests focus techniques (Pomodoro, etc).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--teal-bg);">📚</div>
+          <div class="card-title">Weak Subject Detection</div>
+          <p class="card-desc">Cross-references user-declared weak subjects against actual study logs. If a weak subject hasn't appeared in logs for 3+ days, AI nudges the student to address it.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--purple-bg);">🗺️</div>
+          <div class="card-title">Adaptive Plan Generation</div>
+          <p class="card-desc">After a hard week, AI generates a revised week plan that redistributes topics based on what was missed, with realistic lower daily targets to rebuild momentum.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: rgba(227,90,30,0.1);">💬</div>
+          <div class="card-title">Motivational Nudges</div>
+          <p class="card-desc">AI generates context-aware messages that reference the student's own streak, exam date, and progress — never generic. "You're 27 days from your UPSC Prelims target date."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. EDGE CASES -->
+    <section class="section" id="edge-cases">
+      <div class="section-header">
+        <span class="section-number">12</span>
+        <h2>Edge Cases</h2>
+      </div>
+
+      <table class="schema-table">
+        <thead><tr><th>Edge Case</th><th>Detection</th><th>System Response</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Student doesn't respond to morning ping</strong></td><td>No incoming message within 2h of morning trigger</td><td>Send 3-level escalation reminders. Mark day as AT_RISK after 3rd miss.</td></tr>
+          <tr><td><strong>Student reports false hours</strong></td><td>Productivity score inconsistent with claimed duration (AI flags anomalies)</td><td>AI scores low for productivity, reducing overall daily score. Flag for admin review after 3 anomalies.</td></tr>
+          <tr><td><strong>Timezone change</strong></td><td>Student updates timezone in profile</td><td>Recalculate all cron triggers for that student. Do not restart streak.</td></tr>
+          <tr><td><strong>Exam date passed</strong></td><td>exam_date field in Users crosses current date</td><td>Pause automation. Send congratulations + results check-in message. Offer new exam enrollment.</td></tr>
+          <tr><td><strong>Student explicitly says they're sick</strong></td><td>AI detects health keywords (sick, fever, hospital, unwell)</td><td>Grant a 1-day "health break" — day excluded from streak calculation. Max 2 per month.</td></tr>
+          <tr><td><strong>Duplicate messages sent</strong></td><td>n8n workflow fires twice due to cron overlap</td><td>Idempotency check on PromptLogs: if a prompt of the same type was sent within 30 min, skip second send.</td></tr>
+          <tr><td><strong>OpenAI API failure</strong></td><td>API returns 500 or timeout</td><td>Retry 3×. If all fail: store raw message as-is in IncomingMessages with ai_processed = false. Reprocess in background queue within 1 hour.</td></tr>
+          <tr><td><strong>Student sends unrelated message</strong></td><td>AI classification: no study data extracted</td><td>AI responds naturally ("Got it! Let me know when you start your next session.") — no log created.</td></tr>
+          <tr><td><strong>Long inactivity (3+ days)</strong></td><td>last_activity_at &gt; 72 hours</td><td>Mark INACTIVE. Stop all pings. Send re-engagement message. Admin notification. Manual review required to reactivate.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 13. FAILURE RECOVERY -->
+    <section class="section" id="failure">
+      <div class="section-header">
+        <span class="section-number">13</span>
+        <h2>Failure Recovery System</h2>
+      </div>
+
+      <p>All critical system components have failure recovery paths designed to ensure no data is lost and no student is left in a broken state.</p>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">n8n Workflow Failures</div>
+          <ul>
+            <li>All workflows wrapped in try/catch nodes</li>
+            <li>Failed executions logged to Errors table with payload</li>
+            <li>Dead Letter Queue for failed messages</li>
+            <li>Admin Telegram alert on 3+ failures in 1 hour</li>
+            <li>Automatic retry with exponential backoff (1s, 5s, 30s)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">OpenAI Failures</div>
+          <ul>
+            <li>Circuit breaker: disable AI if 5+ failures in 10 min</li>
+            <li>Fallback: store raw message, flag ai_processed = false</li>
+            <li>Batch reprocess job runs every 60 minutes</li>
+            <li>Graceful degradation: daily scores computed without AI if needed</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Telegram API Failures</div>
+          <ul>
+            <li>Retry up to 5× with 10-second intervals</li>
+            <li>Rate limit detection: queue messages with delay</li>
+            <li>Bot blocked: mark user as TELEGRAM_BLOCKED, pause automation</li>
+            <li>Log all send attempts in PromptLogs (sent/failed/queued)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Database Failures</div>
+          <ul>
+            <li>PostgreSQL: daily automated backups to S3</li>
+            <li>Read replicas for leaderboard/analytics queries</li>
+            <li>Connection pool monitoring with auto-restart</li>
+            <li>Google Sheets: interim fallback for MVP phase</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">🔴</span>
+        <span>Critical: The Errors table must be monitored via a dashboard alert. Any unprocessed error older than 2 hours should trigger a PagerDuty/admin Telegram notification to prevent silent data loss.</span>
+      </div>
+    </section>
+
+    <!-- 14. SCALABILITY -->
+    <section class="section" id="scalability">
+      <div class="section-header">
+        <span class="section-number">14</span>
+        <h2>Scalability Plan</h2>
+      </div>
+
+      <h3>Scaling Tiers</h3>
+      <table class="schema-table">
+        <thead><tr><th>Tier</th><th>Students</th><th>Stack</th><th>Key Changes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-teal">MVP</span></td><td>1 – 50</td><td>n8n + Google Sheets + OpenAI</td><td>All-in-one, single server, sheets as DB</td></tr>
+          <tr><td><span class="tag tag-blue">Growth</span></td><td>50 – 500</td><td>n8n + PostgreSQL + Redis</td><td>Migrate to PostgreSQL, add Redis queues, per-student cron optimization</td></tr>
+          <tr><td><span class="tag tag-purple">Scale</span></td><td>500 – 5000</td><td>+ React Dashboard + Docker Compose</td><td>Multi-container deployment, read replicas, message queue for Telegram</td></tr>
+          <tr><td><span class="tag tag-accent">Enterprise</span></td><td>5000+</td><td>Kubernetes + CDN + Analytics</td><td>K8s autoscaling, tenant isolation, analytics data warehouse, admin portal</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Performance Bottlenecks & Solutions</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">Cron Management (500+ students)</div>
+          <ul>
+            <li>Replace individual crons with Redis-backed priority queue</li>
+            <li>n8n polls queue; workers pick up due tasks</li>
+            <li>Group students by timezone bucket (±30 min) for efficiency</li>
+            <li>Target: &lt;2s message delivery latency per student</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">OpenAI Cost Optimization</div>
+          <ul>
+            <li>Cache common phrase patterns (avoid redundant API calls)</li>
+            <li>Batch low-priority parsing jobs during off-peak hours</li>
+            <li>Fine-tune a smaller model on study log data over time</li>
+            <li>Target: 60% reduction in API spend by 1000 users</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. SECURITY -->
+    <section class="section" id="security">
+      <div class="section-header">
+        <span class="section-number">15</span>
+        <h2>Security Considerations</h2>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background: var(--red-bg);">🔐</div>
+          <div class="card-title">Data Isolation</div>
+          <p class="card-desc">All student data is accessed via user_id. No cross-student data exposure. Row-level security enforced in PostgreSQL using RLS policies.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--amber-bg);">🔑</div>
+          <div class="card-title">Secret Management</div>
+          <p class="card-desc">Telegram Bot Token, OpenAI API Key, and DB credentials stored in Docker secrets or HashiCorp Vault. Never in environment variables in production.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--blue-bg);">🛡️</div>
+          <div class="card-title">Telegram Webhook Security</div>
+          <p class="card-desc">Telegram webhook verified via X-Telegram-Bot-Api-Secret-Token header. Webhook endpoint only accepts HTTPS requests from Telegram IP ranges.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--teal-bg);">🗂️</div>
+          <div class="card-title">Data Retention</div>
+          <p class="card-desc">Raw messages purged after 90 days. Aggregated scores and streaks retained indefinitely. Students can request full data export (GDPR-ready structure).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--purple-bg);">🔒</div>
+          <div class="card-title">n8n Access Control</div>
+          <p class="card-desc">n8n dashboard behind VPN or IP whitelist. All admin operations require 2FA. n8n credentials encrypted at rest using AES-256.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: rgba(227,90,30,0.1);">📋</div>
+          <div class="card-title">Audit Logging</div>
+          <p class="card-desc">All admin actions (streak overrides, manual resets, status changes) logged to an immutable AuditLogs table with actor_id, action, and timestamp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. DEPLOYMENT -->
+    <section class="section" id="deployment">
+      <div class="section-header">
+        <span class="section-number">16</span>
+        <h2>Production Deployment Architecture</h2>
+      </div>
+
+      <h3>MVP Deployment (Docker Compose)</h3>
+      <div class="code-block">
+<span class="cmt"># docker-compose.yml</span>
+<span class="kw">services</span>:
+  <span class="fn">n8n</span>:
+    image: n8nio/n8n:latest
+    ports: [<span class="str">"5678:5678"</span>]
+    environment:
+      - N8N_ENCRYPTION_KEY=<span class="str">"${N8N_SECRET}"</span>
+      - DB_TYPE=postgresdb
+    volumes: [n8n_data:/home/node/.n8n]
+    depends_on: [postgres, redis]
+
+  <span class="fn">postgres</span>:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=disciplineos
+      - POSTGRES_PASSWORD=<span class="str">"${DB_PASS}"</span>
+    volumes: [pg_data:/var/lib/postgresql/data]
+
+  <span class="fn">redis</span>:
+    image: redis:7-alpine
+    command: redis-server --requirepass <span class="str">"${REDIS_PASS}"</span>
+
+  <span class="fn">nginx</span>:
+    image: nginx:alpine
+    volumes: [./nginx.conf:/etc/nginx/nginx.conf]
+    ports: [<span class="str">"443:443"</span>]
+    depends_on: [n8n]
+      </div>
+
+      <h3>Infrastructure Stack</h3>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title">Current (MVP)</div>
+          <ul>
+            <li>VPS: DigitalOcean / Hetzner (4GB RAM, 2 vCPU)</li>
+            <li>Docker Compose orchestration</li>
+            <li>n8n: automation engine + webhook receiver</li>
+            <li>PostgreSQL: primary data store</li>
+            <li>Redis: queues and caching</li>
+            <li>Nginx: reverse proxy + SSL (Let's Encrypt)</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Future (Scale)</div>
+          <ul>
+            <li>Kubernetes (K3s or EKS)</li>
+            <li>React Dashboard (Vercel / CloudFront)</li>
+            <li>PostgreSQL with read replicas (RDS)</li>
+            <li>Redis cluster for multi-node queuing</li>
+            <li>Analytics: ClickHouse + Metabase</li>
+            <li>CI/CD: GitHub Actions → Docker Hub → K8s</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17. SAAS EXPANSION -->
+    <section class="section" id="saas">
+      <div class="section-header">
+        <span class="section-number">17</span>
+        <h2>Future SaaS Expansion Plan</h2>
+      </div>
+
+      <p>DisciplineOS is built from day one with multi-tenancy in mind. The path to a full SaaS product is incremental and implementation-ready.</p>
+
+      <h3>SaaS Roadmap</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Phase 1</div>
+          <div class="tl-body">
+            <div class="tl-title">Private Beta (0–50 students)</div>
+            <p class="tl-desc">Manual onboarding via form. Single n8n instance. Google Sheets as database. Validate core accountability loop and streak psychology. Collect feedback aggressively.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Phase 2</div>
+          <div class="tl-body">
+            <div class="tl-title">Paid Cohorts (50–200 students)</div>
+            <p class="tl-desc">Migrate to PostgreSQL. Add payment via Razorpay. Create batch enrollment (cohort model — 20 students per cohort). Build basic admin dashboard for monitoring student health scores. Introduce weekly leaderboard.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Phase 3</div>
+          <div class="tl-body">
+            <div class="tl-title">Self-Serve SaaS (200–2000 students)</div>
+            <p class="tl-desc">Student self-registration portal. Subscription billing (₹499/month). React dashboard for students (streak calendar, score charts, weak subject heatmap). Admin panel for mentor intervention. Exam-specific personas (UPSC mode vs NEET mode).</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Phase 4</div>
+          <div class="tl-body">
+            <div class="tl-title">Platform + Marketplace (2000+ students)</div>
+            <p class="tl-desc">White-label offering for coaching institutes. Multi-mentor support (each mentor manages a group). AI study resource recommendations. Integration with YouTube playlists, PDFs, and test series. Mobile app (React Native). Analytics API for coaching institutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Monetization Model</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon" style="background: var(--teal-bg);">💰</div>
+          <div class="card-title">Student Subscription</div>
+          <p class="card-desc">₹299–₹799/month per student. Tiered based on features (basic accountability vs full AI coaching vs mentor support).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--blue-bg);">🏫</div>
+          <div class="card-title">Institute License</div>
+          <p class="card-desc">₹50–₹150/student/month for coaching institutes using DisciplineOS as a white-label platform for their enrolled students.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background: var(--purple-bg);">🧑‍🏫</div>
+          <div class="card-title">Mentor Marketplace</div>
+          <p class="card-desc">Platform commission (15–20%) on sessions booked between students and independent mentors discovered through DisciplineOS.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">🚀</span>
+        <span>The strongest moat of DisciplineOS is its <strong>behavioral data</strong>. After 6 months of operation, the platform will hold the most granular competitive exam study behavior dataset in India — enabling highly accurate AI coaching, personalized performance prediction, and eventually, a study-outcome model that no competitor can replicate without years of data collection.</span>
+      </div>
+
+      <hr>
+
+      <div style="text-align: center; padding: 2rem 0 1rem;">
+        <div style="font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); margin-bottom: 0.5rem;">
+          Discipline<span style="color: var(--accent);">OS</span>
+        </div>
+        <p style="font-size: 13px; color: var(--ink4); font-family: var(--font-mono);">System Documentation v1.0 · Production-Grade · Built for Scale</p>
+        <div style="margin-top: 1.25rem; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+          <span class="tag tag-teal">n8n Automation</span>
+          <span class="tag tag-blue">Telegram Bot API</span>
+          <span class="tag tag-purple">OpenAI GPT-4</span>
+          <span class="tag tag-amber">PostgreSQL</span>
+          <span class="tag tag-accent">Redis</span>
+          <span class="tag tag-teal">Docker</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('#sidebar nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`#sidebar nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
